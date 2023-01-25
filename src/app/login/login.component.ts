@@ -6,29 +6,33 @@ import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
-  loginObj: loginObj
-  validForm : any = false
+  loginObj: loginObj;
+  validForm: any = false;
   @ViewChild('loginForm')
   loginForm!: NgForm;
 
-  constructor(public authenticationService: AuthenticationService, private router: Router){
+  constructor(
+    public authenticationService: AuthenticationService,
+    private router: Router
+  ) {
     this.loginObj = {
-      username : '',
-      password : ''
+      username: '',
+      password: '',
     };
   }
 
-  login(){    
-    if(this.loginForm.valid){
-      alert(this.loginForm.valid)
-      this.validForm = false
-      this.router.navigate(['/dashboard']);
-    }else{
-      this.validForm = true
+  login() {
+    if (this.loginForm.valid) {
+      if (this.loginObj.username == 'mani' && this.loginObj.password == '123') {
+        alert(this.loginForm.valid);
+        this.validForm = false;
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.validForm = true;
+      }
     }
   }
 }
