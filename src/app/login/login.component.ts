@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -8,25 +10,30 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent {
 
-  loginObj: any
+  loginObj: loginObj
+  validForm : any = false
+  @ViewChild('loginForm')
+  loginForm!: NgForm;
 
-
-  constructor(public authenticationService: AuthenticationService){
+  constructor(public authenticationService: AuthenticationService, private router: Router){
     this.loginObj = {
-      userName : '',
+      username : '',
       password : ''
     };
   }
 
-  login(){
-    // this.authenticationService.
-  }
-  onClick(){
-    if(this.loginObj.username == "mani" && this.loginObj.password == 123){
-      alert("Login Successful");
+  login(){    
+    if(this.loginForm.valid){
+      alert(this.loginForm.valid)
+      this.validForm = false
+      this.router.navigate(['/dashboard']);
     }else{
-      alert("Login Unsuccessful, Please try again")
+      this.validForm = true
     }
-
   }
 }
+
+export class loginObj {
+  'username':string;
+  'password':any;
+} 

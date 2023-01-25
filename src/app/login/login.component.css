@@ -74,4 +74,7 @@
     .login-card-footer-nav a {
       font-size: 14px;
       color: #919aa3; }
+      .card-body{
+        background-color: #1f1a47;
+      }
   
