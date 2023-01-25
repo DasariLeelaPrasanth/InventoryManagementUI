@@ -8,11 +8,25 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent {
 
-  constructor(public authenticationService: AuthenticationService){
+  loginObj: any
 
+
+  constructor(public authenticationService: AuthenticationService){
+    this.loginObj = {
+      userName : '',
+      password : ''
+    };
   }
 
   login(){
     // this.authenticationService.
+  }
+  onClick(){
+    if(this.loginObj.username == "mani" && this.loginObj.password == 123){
+      alert("Login Successful");
+    }else{
+      alert("Login Unsuccessful, Please try again")
+    }
+
   }
 }
