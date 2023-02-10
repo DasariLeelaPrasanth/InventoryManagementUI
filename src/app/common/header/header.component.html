@@ -1,0 +1,41 @@
+<!-- <div class="header">
+    <div class="logo">
+      <img src="assets/Images/png/logo-color.png" alt="Logo" height="40" width="40">
+    </div>
+    <nav>
+      <a  routerLink="/dashboard" >Dashboard</a>
+      <a  routerLink="/inventory" >Inventory</a>
+      <a  routerLink="/sales" >Sales</a>
+      <button class="btn btn-primary">Data Export</button>
+      <div class="profile">
+        <img src="assets/Images/png/logo-color.png"  height="40" width="40" alt="Profile" (click)="toggleDropdown()">
+        <div class="dropdown" *ngIf="showDropdown">
+          <a routerLink="/profile">View Profile</a>
+          <a href="#" (click)="logout()">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </div> -->
+
+
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between m-0 w-100">
+
+      <div class="logo d-flex align-items-center me-auto me-lg-0">
+        <img src="assets/Images/png/logo-color.png" alt="Logo" height="40" width="40">
+        <h5 class="m-0">Dasari Tech Solutions<span>.</span></h5>
+      </div>
+
+      <nav id="navbar" class="navbar float-right">
+        <ul>
+          <li><a [routerLink]="['/dashboard']" [ngClass]="{ 'active': currentPage == 'dashboard' }" (click)="changePage('dashboard')">Dashboard</a></li>
+          <li><a [routerLink]="['/inventory']" [ngClass]="{ 'active': currentPage == 'inventory' }" (click)="changePage('inventory')">Inventory</a></li>
+          <li><a [routerLink]="['/sales']" [ngClass]="{ 'active': currentPage == 'sales' }" (click)="changePage('sales')">Sales</a></li>
+          <li><a  [ngClass]="{ 'active': currentPage == 'dataExport' }" (click)="changePage('dataExport')" >Data Export</a></li>
+          <li><a [routerLink]="['/profile']" [ngClass]="{ 'active': currentPage == 'profile' }" (click)="changePage('profile')">Profile</a></li>
+        </ul>
+      </nav>
+      
+    </div>
+    
+  </header>

@@ -26,8 +26,7 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      if (this.loginObj.username == 'mani' && this.loginObj.password == '123') {
-        alert(this.loginForm.valid);
+      if (this.loginObj.username == '1234' && this.loginObj.password == '123') {
         this.validForm = false;
         this.router.navigate(['/dashboard']);
       } else {

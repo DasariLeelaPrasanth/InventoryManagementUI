@@ -1,1 +1,310 @@
-<p>inventory works!</p>
+<app-header></app-header>
+<div class="container-fluid">
+    <div class="card" *ngIf="pageType == 'main'">
+        <div class="card-header">
+            <nav id="navbar" class="navbar float-left">
+                <ul>
+                  <li><a [ngClass]="{ 'active': tableType == 'Purchases' }" (click)="tableType = 'Purchases'">Purchases</a></li>
+                  <li><a [ngClass]="{ 'active': tableType == 'Inventory' }" (click)="tableType = 'Inventory'">Inventory</a></li>
+                   </ul>
+              </nav>
+         
+                <div class="float-right">
+                    <button class="btn btn-primary" (click)="pageType = 'create'">
+                        Add Purchase
+                    </button>
+                </div>
+        </div>
+        <div class="card-body">
+            <table class="table" *ngIf="tableType == 'Purchases'">
+                <thead>
+                    <tr>
+                        <th scope="col">S.no</th>
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Business Name</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Date Of Purchase</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                        <td scope="col">{{i+1}}</td>
+                        <td scope="col">{{data.InvoiceNumber}}</td>
+                        <td scope="col">{{data.CustomerName}}</td>
+                        <td scope="col">{{data.BusinessName}}</td>
+                        <td scope="col">{{data.MobileNumber}}</td>
+                        <td scope="col">{{data.DateOfPurchase}}</td>
+                        <td scope="col">{{data.Amount}}</td>
+                        <td  scope="col">
+                            <div class="d-flex">
+                                <div class="p-2">
+
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+
+                                </div>
+                                <div class="p-2" (click)="pageType = 'edit'">
+                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+
+
+                                </div>
+    
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+    <div class="card" *ngIf="pageType == 'create'">
+        <div class="card-header">
+               Add Purchase
+        </div>
+        <div class="card-body">
+            <div class="customerDetails  border-bottom">
+                <div class="row mb-4">
+                    <div class="col-xl-9 border-right">
+                        <div class="row">
+                            <div class="col-xl-4 d-block">
+                                <label>Customer Name</label>
+                                <p-autoComplete id="cn" name="cn"  class="w-100" [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+                                field="name" [minLength]="1"></p-autoComplete>
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Business Name</label>
+                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="BusinessName">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Gst Number</label>
+                                <input id="gst" name="gst" class="form-control" [(ngModel)]="GSTNumber">
+                            </div>
+                        </div>
+                       
+                        <div class="row mt-3">
+                            <div class="col-xl-4">
+                                <label>Phone Number</label>
+                                <input id="pn" name="pn" class="form-control" [(ngModel)]="MobileNumber">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Email Id</label>
+                        <input id="email" name="email" class="form-control" [(ngModel)]="Email">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Address</label>
+                                
+                        <textarea id="address" name="address" rows="3" class="form-control" [(ngModel)]="Address"></textarea>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <label>Invoice Number</label>
+                                <input id="in" name="in" class="form-control"  [(ngModel)]= "InvoiceNumber">
+                            </div>
+                            <div class="col-xl-12 mt-4">
+                                <label>Invoice Date</label>
+                                <input id="dt" name="dt" type="date" class="form-control"  [(ngModel)]= "DateOfPurchase">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="salesData">
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Cost Price</th>
+                        <th scope="col">SellingPrice</th>
+                        <th scope="col">GST(%)</th>
+                        <th scope="col">Warranty</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                          <td>{{i+1}}</td>
+                        <td  scope="col">
+                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+  field="name" [minLength]="1"></p-autoComplete>
+                        </td>
+                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
+                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.CostPrice"></td>
+                        <td  ><input type="number" name="SellingPrice{{i}}" id ="SellingPrice{{i}}" class="form-control"  [(ngModel)]="data.SellingPrice"></td>
+                        <td  ><input type="number" name="Tax{{i}}" id ="Tax{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
+                        <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
+                        <td  scope="col">
+                            <div class="d-flex" style="justify-content : space-between">
+                                <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
+
+                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-2" *ngIf="last" (click)="salesFormArr.push({})">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+
+                                </div>
+    
+                            </div>
+
+                        </td>
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+               </div>
+                
+           
+        </div>
+        <div class="card-footer text-right">
+                <div class="btn btn-group ">
+                    <button class="btn btn-secondary mr-2">
+                        Cancel
+                    </button>
+                    <button class="btn btn-success">
+                        Submit
+                    </button>
+                </div>
+        </div>
+    </div>
+
+
+    <div class="card" *ngIf="pageType == 'edit'">
+        <div class="card-header">
+               Edit Purchases
+        </div>
+        <div class="card-body">
+            <div class="customerDetails  border-bottom">
+                <div class="row mb-4">
+                    <div class="col-xl-9 border-right">
+                        <div class="row">
+                            <div class="col-xl-4 d-block">
+                                <label>Customer Name</label>
+                                <p-autoComplete id="cn" name="cn"  class="w-100" [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+                                field="name" [minLength]="1"></p-autoComplete>
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Business Name</label>
+                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="BusinessName">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Gst Number</label>
+                                <input id="gst" name="gst" class="form-control" [(ngModel)]="GSTNumber">
+                            </div>
+                        </div>
+                       
+                        <div class="row mt-3">
+                            <div class="col-xl-4">
+                                <label>Phone Number</label>
+                                <input id="pn" name="pn" class="form-control" [(ngModel)]="MobileNumber">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Email Id</label>
+                        <input id="email" name="email" class="form-control" [(ngModel)]="Email">
+                            </div>
+                            <div class="col-xl-4">
+                                <label>Address</label>
+                                
+                        <textarea id="address" name="address" rows="3" class="form-control" [(ngModel)]="Address"></textarea>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <label>Invoice Number</label>
+                                <input id="in" name="in" class="form-control"  [(ngModel)]= "InvoiceNumber">
+                            </div>
+                            <div class="col-xl-12 mt-4">
+                                <label>Invoice Date</label>
+                                <input id="dt" name="dt" type="date" class="form-control"  [(ngModel)]= "DateOfPurchase">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="salesData">
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Cost Price</th>
+                        <th scope="col">SellingPrice</th>
+                        <th scope="col">GST(%)</th>
+                        <th scope="col">Warranty</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                          <td>{{i+1}}</td>
+                        <td  scope="col">
+                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+  field="name" [minLength]="1"></p-autoComplete>
+                        </td>
+                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
+                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.CostPrice"></td>
+                        <td  ><input type="number" name="SellingPrice{{i}}" id ="SellingPrice{{i}}" class="form-control"  [(ngModel)]="data.SellingPrice"></td>
+                        <td  ><input type="number" name="Tax{{i}}" id ="Tax{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
+                        <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
+                        <td  scope="col">
+                            <div class="d-flex" style="justify-content : space-between">
+                                <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
+
+                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-2" *ngIf="last" (click)="salesFormArr.push({})">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+
+                                </div>
+    
+                            </div>
+
+                        </td>
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+               </div>
+                
+           
+        </div>
+        <div class="card-footer text-right">
+            <div class="btn btn-group ">
+                <button class="btn btn-secondary mr-2">
+                    Cancel
+                </button>
+                <button class="btn btn-success">
+                    Submit
+                </button>
+            </div>
+    </div>
+    </div>
+
+
+</div>
+
+
+<app-footer></app-footer>
