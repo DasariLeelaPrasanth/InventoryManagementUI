@@ -88,19 +88,115 @@ export class InventoryComponent {
   }]
 
   inventoryDetails : any=[]
-
-
+  purchasesData : any = []
+  inventoryData : any = []
   constructor(public formBuilder: FormBuilder, public _globalService: GlobalService) { }
 
   ngOnInit(): void {
-this.getInventoryDetails()
+    this.getInventoryDetails()
   }
+
+
+
+
   
 
     getInventoryDetails() {
     this._globalService.getRetailers().subscribe((res) => {
       this.inventoryDetails = res;
     });
+
+    this.purchasesData = [{
+      InvoiceNumber : "SN0001",
+      CustomerName : "Prasanth",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "20000"
+    },
+    {
+      InvoiceNumber : "SN0002",
+      CustomerName : "Dasari",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "50000"
+    },
+    {
+      InvoiceNumber : "SN0003",
+      CustomerName : "Leela",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "25000"
+    },
+    {
+      InvoiceNumber : "SN0004",
+      CustomerName : "DLP",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "29000"
+    }
+  ]
+
+
+  this.inventoryData = [{
+    ProductName : "Camera",
+    Quantity : 5,
+    CurrentQuantity : 4,
+    CostPrice : 500,
+    SellingPrice : 1000,
+    Discount : 5,
+    DateOfPurchase : "10-09-2022",
+    Warranty : 2,
+    Tax : 5
+  },
+  {
+    ProductName : "Camera",
+    Quantity : 5,
+    CurrentQuantity : 4,
+    CostPrice : 500,
+    SellingPrice : 1000,
+    Discount : 5,
+    DateOfPurchase : "10-09-2022",
+    Warranty : 2,
+    Tax : 5
+  },
+  {
+    ProductName : "Camera1",
+    Quantity : 5,
+    CurrentQuantity : 4,
+    CostPrice : 500,
+    SellingPrice : 1000,
+    Discount : 5,
+    DateOfPurchase : "10-09-2022",
+    Warranty : 2,
+    Tax : 5
+  },
+  {
+    ProductName : "Camera2",
+    Quantity : 5,
+    CurrentQuantity : 4,
+    CostPrice : 500,
+    SellingPrice : 1000,
+    Discount : 5,
+    DateOfPurchase : "10-09-2022",
+    Warranty : 2,
+    Tax : 5
+  },
+  {
+    ProductName : "Camera3",
+    Quantity : 5,
+    CurrentQuantity : 4,
+    CostPrice : 500,
+    SellingPrice : 1000,
+    Discount : 5,
+    DateOfPurchase : "10-09-2022",
+    Warranty : 2,
+    Tax : 5
+  }
+]
   }
 
 

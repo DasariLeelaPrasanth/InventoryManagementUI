@@ -93,7 +93,7 @@ export class SalesComponent {
     for (let i = 0; i < this.countries.length; i++) {
       let country = this.countries[i];
       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country.name);
+        filtered.push(country);
       }
     }
 

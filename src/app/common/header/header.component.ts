@@ -10,7 +10,7 @@ export class HeaderComponent {
   currentPage : string | undefined | any
 
   constructor(){
-    this.currentPage = sessionStorage.getItem('currentPage');
+    this.currentPage = sessionStorage.getItem('currentPage') ?  sessionStorage.getItem('currentPage') : "dashboard";
     
   }
   toggleDropdown() {

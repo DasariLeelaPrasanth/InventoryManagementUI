@@ -29,8 +29,9 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+               
                 <tbody >
-                    <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of purchasesData; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>
@@ -71,15 +72,16 @@
                         <th scope="col">Current Quantity</th>
                         <th scope="col">Cost Price</th>
                         <th scope="col">Selling Price</th>
-                        <th scope="col">Discount</th>
+                        <th scope="col">Discount(%)</th>
                         <th scope="col">Date Of Purchase</th>
-                        <th scope="col">Warranty</th>
-                        <th scope="col">GST</th>
+                        <th scope="col">Warranty (Months)</th>
+                        <th scope="col">GST(%)</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+              
                 <tbody >
-                    <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of inventoryData; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.ProductName}}</td>
                         <td scope="col">{{data.Quantity}}</td>
