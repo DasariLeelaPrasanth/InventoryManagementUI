@@ -35,33 +35,10 @@ export class InventoryComponent {
   BusinessName:any
 
   countries: any = [ 
-    {"name": "Afghanistan", "code": "AF"}, 
-    {"name": "Åland Islands", "code": "AX"}, 
-    {"name": "Albania", "code": "AL"}, 
-    {"name": "Algeria", "code": "DZ"}, 
-    {"name": "American Samoa", "code": "AS"}, 
-    {"name": "Andorra", "code": "AD"}, 
-    {"name": "Angola", "code": "AO"}, 
-    {"name": "Anguilla", "code": "AI"}, 
-    {"name": "Antarctica", "code": "AQ"}, 
-    {"name": "Antigua and Barbuda", "code": "AG"}, 
-    {"name": "Argentina", "code": "AR"}, 
-    {"name": "Armenia", "code": "AM"}, 
-    {"name": "Aruba", "code": "AW"}, 
-    {"name": "Australia", "code": "AU"}, 
-    {"name": "Austria", "code": "AT"}, 
-    {"name": "Azerbaijan", "code": "AZ"}, 
-    {"name": "Bahamas", "code": "BS"}, 
-    {"name": "Bahrain", "code": "BH"}, 
-    {"name": "Bangladesh", "code": "BD"}, 
-    {"name": "Barbados", "code": "BB"}, 
-    {"name": "Belarus", "code": "BY"}, 
-    {"name": "Belgium", "code": "BE"}, 
-    {"name": "Belize", "code": "BZ"}, 
-    {"name": "Benin", "code": "BJ"}, 
-    {"name": "Bermuda", "code": "BM"}, 
-    {"name": "Bhutan", "code": "BT"}, 
-    {"name": "Bolivia", "code": "BO"}, ];
+    {"name": "Prasanth", "code": "AF"}, 
+    {"name": "Leela", "code": "AX"}, 
+    {"name": "Dasari", "code": "AL"}, 
+     ];
 
   filteredCountries: any=[];
 
@@ -90,7 +67,29 @@ export class InventoryComponent {
   inventoryDetails : any=[]
   purchasesData : any = []
   inventoryData : any = []
-  constructor(public formBuilder: FormBuilder, public _globalService: GlobalService) { }
+  constructor(public formBuilder: FormBuilder, public _globalService: GlobalService) { 
+    
+    this.InvoiceNumber = "SN0001"
+    this.DateOfPurchase = "2023-02-11"
+    this.Address = "Vepagunta"
+    this.Email = "prasanthprince1998@gmail.com"
+    this.MobileNumber = "9177987144"
+    this.GSTNumber = "9177987144"
+    this.CustomerName = {name: 'Prasanth', code: 'AF'}
+    this.BusinessName = "Prasanth"
+
+    this.salesFormArr  = [{
+      ProductName : "Camera",
+      DateOfPurchase : "10-09-2022",
+      Quantity : "1",
+      Price : "1",
+      Discount : 0,
+      Tax : 0,
+      TotalPrice : "1"
+}]
+
+   
+  }
 
   ngOnInit(): void {
     this.getInventoryDetails()
@@ -199,6 +198,25 @@ export class InventoryComponent {
 ]
   }
 
+  resetForm(){
+    this.InvoiceNumber = ""
+    this.DateOfPurchase = ""
+    this.Address = ""
+    this.Email = ""
+    this.MobileNumber = ""
+    this.GSTNumber = ""
+    this.CustomerName = ""
+    this.BusinessName = ""
+    this.salesFormArr  = [{
+      ProductName : "",
+      DateOfPurchase : "",
+      Quantity : 0,
+      Price : 0,
+      Discount : 0,
+      Tax : 0,
+      TotalPrice : 0
+}]
+  }
 
   filterCountry(event : any) {
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side

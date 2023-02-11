@@ -23,33 +23,10 @@ export class SalesComponent {
   BusinessName:any
 
   countries: any = [ 
-    {"name": "Afghanistan", "code": "AF"}, 
-    {"name": "Åland Islands", "code": "AX"}, 
-    {"name": "Albania", "code": "AL"}, 
-    {"name": "Algeria", "code": "DZ"}, 
-    {"name": "American Samoa", "code": "AS"}, 
-    {"name": "Andorra", "code": "AD"}, 
-    {"name": "Angola", "code": "AO"}, 
-    {"name": "Anguilla", "code": "AI"}, 
-    {"name": "Antarctica", "code": "AQ"}, 
-    {"name": "Antigua and Barbuda", "code": "AG"}, 
-    {"name": "Argentina", "code": "AR"}, 
-    {"name": "Armenia", "code": "AM"}, 
-    {"name": "Aruba", "code": "AW"}, 
-    {"name": "Australia", "code": "AU"}, 
-    {"name": "Austria", "code": "AT"}, 
-    {"name": "Azerbaijan", "code": "AZ"}, 
-    {"name": "Bahamas", "code": "BS"}, 
-    {"name": "Bahrain", "code": "BH"}, 
-    {"name": "Bangladesh", "code": "BD"}, 
-    {"name": "Barbados", "code": "BB"}, 
-    {"name": "Belarus", "code": "BY"}, 
-    {"name": "Belgium", "code": "BE"}, 
-    {"name": "Belize", "code": "BZ"}, 
-    {"name": "Benin", "code": "BJ"}, 
-    {"name": "Bermuda", "code": "BM"}, 
-    {"name": "Bhutan", "code": "BT"}, 
-    {"name": "Bolivia", "code": "BO"}, ];
+    {"name": "Prasanth", "code": "AF"}, 
+    {"name": "Leela", "code": "AX"}, 
+    {"name": "Dasari", "code": "AL"}, 
+     ];
 
   filteredCountries: any=[];
 
@@ -77,6 +54,7 @@ export class SalesComponent {
 
 
   constructor(public formBuilder: FormBuilder) {
+    
    }
 
    purchasesData : any = []
@@ -225,6 +203,7 @@ export class SalesComponent {
       DateOfPurchase : this.DateOfPurchase
     }
     let salesData = this.salesFormArr
+    
 
     console.log(customerData,salesData,"customerDatacustomerData");
      let docDefinition : any = {
@@ -301,10 +280,10 @@ export class SalesComponent {
         table: {
           
           headerRows: 1,
-          widths: ['*', 'auto', 'auto', 'auto','auto', 'auto', 'auto'],
+          widths: ['auto', '*', 'auto', 'auto','auto', 'auto', 'auto'],
           body: [
             ['S.No','Product Name', 'Quantity', 'Price/Unit', 'Discount(%)', 'GST(%)' , 'Amount'],
-            ...salesData.map((p: any, index : any) => ([index +1 , p.ProductName, p.Quantity, p.Price, p.Discount, p.Tax, p.TotalPrice])),
+            ...salesData.map((p: any, index : any) => ([index +1 , "name" in  p.ProductName ? p.ProductName.name : p.ProductName, p.Quantity, p.Price, p.Discount, p.Tax, p.TotalPrice])),
             // [{text: 'Total Amount', colSpan: 7},  salesData.reduce((sum:any, p: any)=> sum + (p.TotalPrice), 0)]
             [{},{text: 'Total Amount'},{},{}, {},{},  salesData.reduce((sum:any, p: any)=> sum + (p.TotalPrice), 0)]
           ]
