@@ -26,12 +26,12 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      if (this.loginObj.username == '1234' && this.loginObj.password == '123') {
+      // if (this.loginObj.username == '1234' && this.loginObj.password == '123') {
         this.validForm = false;
         this.router.navigate(['/dashboard']);
-      } else {
-        this.validForm = true;
-      }
+      // } else {
+      //   this.validForm = true;
+      // }
     }
   }
 }

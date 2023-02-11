@@ -57,6 +57,58 @@
                     </tr>
                 </tbody>
             </table>
+
+
+          
+
+
+            <table class="table" *ngIf="tableType == 'Inventory'">
+                <thead>
+                    <tr>
+                        <th scope="col">S.no</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Current Quantity</th>
+                        <th scope="col">Cost Price</th>
+                        <th scope="col">Selling Price</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Date Of Purchase</th>
+                        <th scope="col">Warranty</th>
+                        <th scope="col">GST</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                        <td scope="col">{{i+1}}</td>
+                        <td scope="col">{{data.ProductName}}</td>
+                        <td scope="col">{{data.Quantity}}</td>
+                        <td scope="col">{{data.CurrentQuantity}}</td>
+                        <td scope="col">{{data.CostPrice}}</td>
+                        <td scope="col">{{data.SellingPrice}}</td>
+                        <td scope="col">{{data.Discount}}</td>
+                        <td scope="col">{{data.DateOfPurchase}}</td>
+                        <td scope="col">{{data.Warranty}}</td>
+                        <td scope="col">{{data.Tax}}</td>
+                        <td  scope="col">
+                            <div class="d-flex">
+                                <div class="p-2">
+
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+
+                                </div>
+                                <div class="p-2" (click)="pageType = 'edit'">
+                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+
+
+                                </div>
+    
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>

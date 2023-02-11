@@ -9,6 +9,19 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class InventoryComponent {
 
+  // ProductName : DataTypes.STRING,
+  // DateOfPurchase : DataTypes.DATE,
+  // Quantity : DataTypes.INTEGER,
+  // CostPrice : DataTypes.INTEGER,
+  // SellingPrice : DataTypes.INTEGER,
+  // Warranty : DataTypes.INTEGER,
+  // Tax : DataTypes.INTEGER,
+  // CurrentQuantity : DataTypes.INTEGER,
+
+          
+          
+
+
   tableType : any = 'Purchases'
 
 
