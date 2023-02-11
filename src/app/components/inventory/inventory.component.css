@@ -3,3 +3,17 @@
     white-space: nowrap;
     padding: 10px 0 10px 15px;
 }
+
+:host ::ng-deep .p-autocomplete {
+    display:block !important;
+
+  
+  width : 100% !important
+}
+
+:host ::ng-deep   .p-autocomplete-input{
+  width : 100% !important;
+  display: block;
+  height: calc(1.5em + 0.75rem + 2px);
+}
+

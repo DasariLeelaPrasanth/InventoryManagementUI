@@ -1078,3 +1078,16 @@
 a {
   cursor:pointer;
 }
+
+
+.p-component, .p-component * {
+  box-sizing: border-box;
+  width : 100% !important
+}
+
+p-autocomplete {
+  display:block !important;
+  
+  width : 100% !important
+}
+
