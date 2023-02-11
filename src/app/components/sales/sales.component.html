@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody >
-                    <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of purchasesData; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>

@@ -79,8 +79,41 @@ export class SalesComponent {
   constructor(public formBuilder: FormBuilder) {
    }
 
+   purchasesData : any = []
   ngOnInit(): void {
-
+    this.purchasesData = [{
+      InvoiceNumber : "SN0001",
+      CustomerName : "Prasanth",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "20000"
+    },
+    {
+      InvoiceNumber : "SN0002",
+      CustomerName : "Dasari",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "50000"
+    },
+    {
+      InvoiceNumber : "SN0003",
+      CustomerName : "Leela",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "25000"
+    },
+    {
+      InvoiceNumber : "SN0004",
+      CustomerName : "DLP",
+      BusinessName : "DTSolutions",
+      MobileNumber : "9177987144",
+      DateOfPurchase : "10-09-2022",
+      Amount : "29000"
+    }
+  ]
   }
   
 
