@@ -54,4 +54,12 @@ export class GlobalService {
        
    }
 
+
+   dataDump(){
+      let val = this._http
+         .get(AppSettings.api.dataDump);
+         return val
+         
+     }
+
 }

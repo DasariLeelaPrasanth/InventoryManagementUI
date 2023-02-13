@@ -19,5 +19,6 @@ export class AppSettings{
         "createRetailers" :  environment.api + "/createRetailers",
 
     
+        "dataDump" : environment.api + "/dataDump"
     }
 }

@@ -15,7 +15,7 @@ export class LoginComponent {
   loginForm!: NgForm;
 
   constructor(
-    public authenticationService: AuthenticationService,
+    public _authenticationService: AuthenticationService,
     private router: Router
   ) {
     this.loginObj = {
@@ -26,12 +26,17 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      // if (this.loginObj.username == '1234' && this.loginObj.password == '123') {
-        this.validForm = false;
-        this.router.navigate(['/dashboard']);
-      // } else {
-      //   this.validForm = true;
-      // }
+      this._authenticationService.login(this.loginObj).subscribe((res: any) => {
+        console.log(res,"login");
+        if(res['message'] == "Success"){
+           this.validForm = false;
+           this.router.navigate(['/dashboard']);
+        }
+        
+      },err => {
+        console.log(err);
+        this.validForm = true;
+      })
     }
   }
 }

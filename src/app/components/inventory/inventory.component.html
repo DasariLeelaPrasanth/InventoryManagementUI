@@ -35,7 +35,7 @@
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>
-                        <td scope="col">{{data.BusinessName}}</td>
+                        <td scope="col">{{data.RetailerName}}</td>
                         <td scope="col">{{data.MobileNumber}}</td>
                         <td scope="col">{{data.DateOfPurchase}}</td>
                         <td scope="col">{{data.Amount}}</td>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
-                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="BusinessName">
+                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="RetailerName">
                             </div>
                             <div class="col-xl-4">
                                 <label>Gst Number</label>
@@ -188,13 +188,15 @@
                         <th scope="col">Quantity</th>
                         <th scope="col">Cost Price</th>
                         <th scope="col">SellingPrice</th>
+                        
+                        <th scope="col">Discount(%)</th>
                         <th scope="col">GST(%)</th>
-                        <th scope="col">Warranty</th>
+                        <th scope="col">Warranty(in months)</th>
                         <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                      <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
                           <td>{{i+1}}</td>
                         <td  scope="col">
                             <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
@@ -203,15 +205,16 @@
                         <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
                         <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.CostPrice"></td>
                         <td  ><input type="number" name="SellingPrice{{i}}" id ="SellingPrice{{i}}" class="form-control"  [(ngModel)]="data.SellingPrice"></td>
+                        <td  ><input type="number" name="Discount{{i}}" id ="Discount{{i}}" class="form-control"  [(ngModel)]="data.Discount"></td>
                         <td  ><input type="number" name="Tax{{i}}" id ="Tax{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
                         <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
                         <td  scope="col">
                             <div class="d-flex" style="justify-content : space-between">
-                                <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
+                                <div class="p-2" *ngIf="inventoryFormArr.length > 1 "  (click)="inventoryFormArr.splice(i,1)">
 
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                                 </div>
-                                <div class="p-2" *ngIf="last" (click)="salesFormArr.push({})">
+                                <div class="p-2" *ngIf="last" (click)="addInventoryForm()">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
 
                                 </div>
@@ -232,7 +235,7 @@
                     <button class="btn btn-secondary mr-2">
                         Cancel
                     </button>
-                    <button class="btn btn-success">
+                    <button class="btn btn-success" (click)="submitInventory()">
                         Submit
                     </button>
                 </div>
@@ -256,7 +259,7 @@
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
-                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="BusinessName">
+                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="RetailerName">
                             </div>
                             <div class="col-xl-4">
                                 <label>Gst Number</label>
@@ -312,7 +315,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                      <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
                           <td>{{i+1}}</td>
                         <td  scope="col">
                             <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
@@ -325,11 +328,11 @@
                         <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
                         <td  scope="col">
                             <div class="d-flex" style="justify-content : space-between">
-                                <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
+                                <div class="p-2" *ngIf="inventoryFormArr.length > 1 "  (click)="inventoryFormArr.splice(i,1)">
 
                                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                                 </div>
-                                <div class="p-2" *ngIf="last" (click)="salesFormArr.push({})">
+                                <div class="p-2" *ngIf="last" (click)="inventoryFormArr.push({})">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
 
                                 </div>

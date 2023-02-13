@@ -32,7 +32,7 @@ export class InventoryComponent {
   MobileNumber:any
   GSTNumber:any
   CustomerName:any
-  BusinessName:any
+  RetailerName:any
 
   countries: any = [ 
     {"name": "Prasanth", "code": "AF"}, 
@@ -54,7 +54,7 @@ export class InventoryComponent {
   userForm!: FormGroup;
 
 
-  salesFormArr :any = [{
+  inventoryFormArr :any = [{
         ProductName : "",
         DateOfPurchase : "",
         Quantity : "",
@@ -76,9 +76,9 @@ export class InventoryComponent {
     this.MobileNumber = "9177987144"
     this.GSTNumber = "9177987144"
     this.CustomerName = {name: 'Prasanth', code: 'AF'}
-    this.BusinessName = "Prasanth"
+    this.RetailerName = "Prasanth"
 
-    this.salesFormArr  = [{
+    this.inventoryFormArr  = [{
       ProductName : "Camera",
       DateOfPurchase : "10-09-2022",
       Quantity : "1",
@@ -104,40 +104,6 @@ export class InventoryComponent {
     this._globalService.getRetailers().subscribe((res) => {
       this.inventoryDetails = res;
     });
-
-    this.purchasesData = [{
-      InvoiceNumber : "SN0001",
-      CustomerName : "Prasanth",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "20000"
-    },
-    {
-      InvoiceNumber : "SN0002",
-      CustomerName : "Dasari",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "50000"
-    },
-    {
-      InvoiceNumber : "SN0003",
-      CustomerName : "Leela",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "25000"
-    },
-    {
-      InvoiceNumber : "SN0004",
-      CustomerName : "DLP",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "29000"
-    }
-  ]
 
 
   this.inventoryData = [{
@@ -206,16 +172,32 @@ export class InventoryComponent {
     this.MobileNumber = ""
     this.GSTNumber = ""
     this.CustomerName = ""
-    this.BusinessName = ""
-    this.salesFormArr  = [{
+    this.RetailerName = ""
+  
+    this.inventoryFormArr  = [{
       ProductName : "",
       DateOfPurchase : "",
       Quantity : 0,
-      Price : 0,
+      CostPrice : 0,
+      SellingPrice : 0,
       Discount : 0,
       Tax : 0,
       TotalPrice : 0
 }]
+  }
+
+
+  addInventoryForm() {
+    this.inventoryFormArr.push({
+      ProductName : "",
+      DateOfPurchase : "",
+      Quantity : 0,
+      CostPrice : 0,
+      SellingPrice : 0,
+      Discount : 0,
+      Tax : 0,
+      TotalPrice : 0
+    })
   }
 
   filterCountry(event : any) {
@@ -249,4 +231,29 @@ export class InventoryComponent {
     multiple: false
   };
 
+  submitInventory(){
+
+    let retailerData = {
+      MobileNumber : this.MobileNumber,
+      Email : this.Email,
+       Address : this.Address,
+      RetailerName : this.RetailerName,
+      CustomerName : this.CustomerName,
+      GSTNumber : this.GSTNumber,
+      DateOfPurchase : this.DateOfPurchase,
+      InvoiceNumber : this.InvoiceNumber
+    };
+    let inventoryData =  this.inventoryFormArr;
+    let data = {
+      retailerData : retailerData,
+      inventoryData : inventoryData
+    }
+
+    this._globalService.createRetailers(data).subscribe((res : any) => {
+      console.log(res);
+      
+    });
+    console.log(this.inventoryFormArr);
+    
+  }
 }

@@ -31,7 +31,7 @@
           <li><a [routerLink]="['/dashboard']" [ngClass]="{ 'active': currentPage == 'dashboard' }" (click)="changePage('dashboard')">Dashboard</a></li>
           <li><a [routerLink]="['/inventory']" [ngClass]="{ 'active': currentPage == 'inventory' }" (click)="changePage('inventory')">Inventory</a></li>
           <li><a [routerLink]="['/sales']" [ngClass]="{ 'active': currentPage == 'sales' }" (click)="changePage('sales')">Sales</a></li>
-          <li><a  [ngClass]="{ 'active': currentPage == 'dataExport' }" (click)="changePage('dataExport')" >Data Export</a></li>
+          <li><a  [ngClass]="{ 'active': currentPage == 'dataExport' }" (click)="changePage('dataExport');dataDump()" >Data Export</a></li>
           <li><a [routerLink]="['/profile']" [ngClass]="{ 'active': currentPage == 'profile' }" (click)="changePage('profile')">Profile</a></li>
         </ul>
       </nav>

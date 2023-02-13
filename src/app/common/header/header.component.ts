@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,16 @@ export class HeaderComponent {
   showDropdown = false;
   currentPage : string | undefined | any
 
-  constructor(){
+  constructor( public _globalService: GlobalService){
     this.currentPage = sessionStorage.getItem('currentPage') ?  sessionStorage.getItem('currentPage') : "dashboard";
     
+  }
+
+
+  dataDump() {
+    this._globalService.dataDump().subscribe((res : any) => {
+     
+    });
   }
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
