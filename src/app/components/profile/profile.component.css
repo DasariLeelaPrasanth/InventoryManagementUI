@@ -1,0 +1,32 @@
+.title{
+    color: grey;
+    font-size: 32px;
+    font-weight: bold;
+}
+.view-only {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 20px;
+  }
+.profile-fields {
+    font-size: 18px;
+    color: black;
+}
+.edit-profile{
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+.image{
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+.choosefile{
+  display: block;
+  margin: auto;
+  width: 102px;
+}

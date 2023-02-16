@@ -1,0 +1,115 @@
+<app-header></app-header>
+<!-- ViewOnly Profile Page -->
+<div class="container-fluid" *ngIf="isViewOnly">
+    <div class="card">
+        <div class="card-header">
+            Profile
+        </div>
+        <div class="container-fluid my-5" *ngIf="isViewOnly">
+            <div class="float-left">
+                <img [src]="imageUrl" *ngIf="imageUrl" class="image" width="200" height="200" />
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p class="profile-fields">Username: {{ user.name }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">Password: {{'*'.repeat(user.password.length) }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">Sub Start: {{ user.substart }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">Sub End: {{ user.subend }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p class="profile-fields">Phone Number: {{ user.phonenumber }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">Email: {{ user.email }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">GST Number: {{ user.gstnumber }}</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="profile-fields">Address: {{ user.address }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" *ngIf="isViewOnly">
+                <button class="btn btn-primary" (click)="toggleView()">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Profile Page -->
+<div class="container-fluid" *ngIf="!isViewOnly">
+    <div class="card">
+        <div class="card-header">
+            Edit Profile
+        </div>
+        <div *ngIf="!isViewOnly" class="container-fluid my-5">
+            <div class="float-left">
+                <img [src]="imageUrl" *ngIf="imageUrl" class="image" />
+                <br>
+                <div class="choosefile">
+                    <input type="file" (change)="uploadImage($event)" class="form-control-file" />
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" [(ngModel)]="user.name" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" [(ngModel)]="user.password" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Sub Start:</label>
+                        <input type="date" [(ngModel)]="user.substart" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Sub End:</label>
+                        <input type="date" [(ngModel)]="user.subend" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Phone Number:</label>
+                        <input type="text" [(ngModel)]="user.phonenumber" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" [(ngModel)]="user.email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>GST Number:</label>
+                        <input type="text" [(ngModel)]="user.gstnumber" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label>
+                        <textarea class="form-control" [(ngModel)]="user.address" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <form (ngSubmit)="saveChanges()">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary" (click)="toggleView()">Cancel</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
