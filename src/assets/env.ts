@@ -1,3 +1,3 @@
 export const ip = {
-    api : "http://localhost:3330"
+    api : "http://192.168.0.8:3330"
 }

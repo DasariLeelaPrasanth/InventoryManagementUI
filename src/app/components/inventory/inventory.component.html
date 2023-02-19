@@ -4,16 +4,18 @@
         <div class="card-header">
             <nav id="navbar" class="navbar float-left">
                 <ul>
-                  <li><a [ngClass]="{ 'active': tableType == 'Purchases' }" (click)="tableType = 'Purchases'">Purchases</a></li>
-                  <li><a [ngClass]="{ 'active': tableType == 'Inventory' }" (click)="tableType = 'Inventory'">Inventory</a></li>
-                   </ul>
-              </nav>
-         
-                <div class="float-right">
-                    <button class="btn btn-primary" (click)="pageType = 'create';resetForm()">
-                        Add Purchase
-                    </button>
-                </div>
+                    <li><a [ngClass]="{ 'active': tableType == 'Purchases' }"
+                            (click)="tableType = 'Purchases'">Purchases</a></li>
+                    <li><a [ngClass]="{ 'active': tableType == 'Inventory' }"
+                            (click)="tableType = 'Inventory'">Inventory</a></li>
+                </ul>
+            </nav>
+
+            <div class="float-right">
+                <button class="btn btn-primary" (click)="pageType = 'create';resetForm()">
+                    Add Purchase
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <table class="table" *ngIf="tableType == 'Purchases'">
@@ -22,36 +24,35 @@
                         <th scope="col">S.no</th>
                         <th scope="col">Invoice Number</th>
                         <th scope="col">Customer Name</th>
-                        <th scope="col">Business Name</th>
+                        <th scope="col">Retailer Name</th>
                         <th scope="col">Mobile Number</th>
+                        <th scope="col">Email Id</th>
+                        <th scope="col">GST Number</th>
                         <th scope="col">Date Of Purchase</th>
-                        <th scope="col">Amount</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-               
-                <tbody >
-                    <tr *ngFor="let data of purchasesData; let i = index; let first = first ; let last = last">
+                <tbody>
+                    <tr *ngFor="let data of inventoryDetails; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>
                         <td scope="col">{{data.RetailerName}}</td>
                         <td scope="col">{{data.MobileNumber}}</td>
-                        <td scope="col">{{data.DateOfPurchase}}</td>
-                        <td scope="col">{{data.Amount}}</td>
-                        <td  scope="col">
+                        <td scope="col">{{data.Email}}</td>
+                        <td scope="col">{{data.GSTNumber}}</td>
+                        <td scope="col">{{data.DateOfPurchase | date}}</td>
+                        <td scope="col">
                             <div class="d-flex">
                                 <div class="p-2">
 
                                     <i class="fa fa-trash" aria-hidden="true"></i>
 
                                 </div>
-                                <div class="p-2" (click)="pageType = 'edit'">
-                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
-
-
+                                <div class="p-2" (click)="pageType = 'edit';editPageData(data)">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                 </div>
-    
+
                             </div>
 
                         </td>
@@ -60,7 +61,7 @@
             </table>
 
 
-          
+
 
 
             <table class="table" *ngIf="tableType == 'Inventory'">
@@ -76,11 +77,11 @@
                         <th scope="col">Date Of Purchase</th>
                         <th scope="col">Warranty (Months)</th>
                         <th scope="col">GST(%)</th>
-                        <th scope="col">Action</th>
+                        <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
-              
-                <tbody >
+
+                <tbody>
                     <tr *ngFor="let data of inventoryData; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.ProductName}}</td>
@@ -92,7 +93,7 @@
                         <td scope="col">{{data.DateOfPurchase}}</td>
                         <td scope="col">{{data.Warranty}}</td>
                         <td scope="col">{{data.Tax}}</td>
-                        <td  scope="col">
+                        <!-- <td  scope="col">
                             <div class="d-flex">
                                 <div class="p-2">
 
@@ -107,7 +108,7 @@
     
                             </div>
 
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -115,16 +116,16 @@
 
     </div>
 
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     <div class="card" *ngIf="pageType == 'create'">
         <div class="card-header">
-               Add Purchase
+            Add Purchase
         </div>
         <div class="card-body">
             <div class="customerDetails  border-bottom">
@@ -133,19 +134,20 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label style="width: 100%;">Customer Name</label>
-                                <p-autoComplete id="cn" name="cn"  class="w-100" [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+                                <p-autoComplete id="cn" name="cn" class="w-100" [(ngModel)]="CustomerName"
+                                [suggestions]="filteredCustomerNameArr" (completeMethod)="filterCustomer($event)"
                                 field="name" [minLength]="1"></p-autoComplete>
                             </div>
                             <div class="col-xl-4">
-                                <label>Business Name</label>
-                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="RetailerName">
+                                <label>Retailer Name</label>
+                                <input id="bn" name="bn" type="text" class="form-control" [(ngModel)]="RetailerName">
                             </div>
                             <div class="col-xl-4">
                                 <label>Gst Number</label>
                                 <input id="gst" name="gst" class="form-control" [(ngModel)]="GSTNumber">
                             </div>
                         </div>
-                       
+
                         <div class="row mt-3">
                             <div class="col-xl-4">
                                 <label>Phone Number</label>
@@ -153,28 +155,28 @@
                             </div>
                             <div class="col-xl-4">
                                 <label>Email Id</label>
-                        <input id="email" name="email" class="form-control" [(ngModel)]="Email">
+                                <input id="email" name="email" class="form-control" [(ngModel)]="Email">
                             </div>
                             <div class="col-xl-4">
                                 <label>Address</label>
-                                
-                        <textarea id="address" name="address" rows="3" class="form-control" [(ngModel)]="Address"></textarea>
+                                <textarea id="address" name="address" rows="3" class="form-control"
+                                    [(ngModel)]="Address"></textarea>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="col-xl-3">
                         <div class="row">
                             <div class="col-xl-12">
                                 <label>Invoice Number</label>
-                                <input id="in" name="in" class="form-control"  [(ngModel)]= "InvoiceNumber">
+                                <input id="in" name="in" class="form-control" [(ngModel)]="InvoiceNumber">
                             </div>
                             <div class="col-xl-12 mt-4">
                                 <label>Invoice Date</label>
-                                <input id="dt" name="dt" type="date" class="form-control"  [(ngModel)]= "DateOfPurchase">
+                                <input id="dt" name="dt" type="date" class="form-control" [(ngModel)]="DateOfPurchase">
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -182,70 +184,78 @@
 
                 <table class="table">
                     <thead>
-                      <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Cost Price</th>
-                        <th scope="col">SellingPrice</th>
-                        
-                        <th scope="col">Discount(%)</th>
-                        <th scope="col">GST(%)</th>
-                        <th scope="col">Warranty(in months)</th>
-                        <th scope="col"></th>
-                      </tr>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Cost Price</th>
+                            <th scope="col">SellingPrice</th>
+
+                            <th scope="col">Discount(%)</th>
+                            <th scope="col">GST(%)</th>
+                            <th scope="col">Warranty(in months)</th>
+                            <th scope="col"></th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
-                          <td>{{i+1}}</td>
-                        <td  scope="col">
-                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-  field="name" [minLength]="1"></p-autoComplete>
-                        </td>
-                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
-                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.CostPrice"></td>
-                        <td  ><input type="number" name="SellingPrice{{i}}" id ="SellingPrice{{i}}" class="form-control"  [(ngModel)]="data.SellingPrice"></td>
-                        <td  ><input type="number" name="Discount{{i}}" id ="Discount{{i}}" class="form-control"  [(ngModel)]="data.Discount"></td>
-                        <td  ><input type="number" name="Tax{{i}}" id ="Tax{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
-                        <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
-                        <td  scope="col">
-                            <div class="d-flex" style="justify-content : space-between">
-                                <div class="p-2" *ngIf="inventoryFormArr.length > 1 "  (click)="inventoryFormArr.splice(i,1)">
+                        <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
+                            <td>{{i+1}}</td>
+                            <td scope="col">
+                                <p-autoComplete name="pn{{i}}" id="pn{{i}}" [(ngModel)]="data.ProductName"
+                                    [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+                                    field="name" [minLength]="1"></p-autoComplete>
+                            </td>
+                            <td scope="col"><input type="number" name="qua{{i}}" id="qua{{i}}" class="form-control"
+                                    [(ngModel)]="data.Quantity"></td>
+                            <td scope="col"><input type="number" name="pri{{i}}" id="pri{{i}}" class="form-control"
+                                    [(ngModel)]="data.CostPrice"></td>
+                            <td><input type="number" name="SellingPrice{{i}}" id="SellingPrice{{i}}"
+                                    class="form-control" [(ngModel)]="data.SellingPrice"></td>
+                            <td><input type="number" name="Discount{{i}}" id="Discount{{i}}" class="form-control"
+                                    [(ngModel)]="data.Discount"></td>
+                            <td><input type="number" name="Tax{{i}}" id="Tax{{i}}" class="form-control"
+                                    [(ngModel)]="data.Tax"></td>
+                            <td scope="col"><input type="number" name="Warranty{{i}}" id="Warranty{{i}}"
+                                    class="form-control" [(ngModel)]="data.Warranty"></td>
+                            <td scope="col">
+                                <div class="d-flex" style="justify-content : space-between">
+                                    <div class="p-2" *ngIf="inventoryFormArr.length > 1 "
+                                        (click)="inventoryFormArr.splice(i,1)">
 
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="p-2" *ngIf="last" (click)="addInventoryForm()">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+
+                                    </div>
+
                                 </div>
-                                <div class="p-2" *ngIf="last" (click)="addInventoryForm()">
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
 
-                                </div>
-    
-                            </div>
+                            </td>
+                        </tr>
 
-                        </td>
-                      </tr>
-                     
                     </tbody>
-                  </table>
-               </div>
-                
-           
+                </table>
+            </div>
+
+
         </div>
         <div class="card-footer text-right">
-                <div class="btn btn-group ">
-                    <button class="btn btn-secondary mr-2">
-                        Cancel
-                    </button>
-                    <button class="btn btn-success" (click)="submitInventory()">
-                        Submit
-                    </button>
-                </div>
+            <div class="btn btn-group ">
+                <button class="btn btn-secondary mr-2">
+                    Cancel
+                </button>
+                <button class="btn btn-success" (click)="submitInventory()">
+                    Submit
+                </button>
+            </div>
         </div>
     </div>
 
 
     <div class="card" *ngIf="pageType == 'edit'">
         <div class="card-header">
-               Edit Purchases
+            View Purchases
         </div>
         <div class="card-body">
             <div class="customerDetails  border-bottom">
@@ -254,19 +264,20 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label>Customer Name</label>
-                                <p-autoComplete id="cn" name="cn"  class="w-100" [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-                                field="name" [minLength]="1"></p-autoComplete>
+                                <p-autoComplete id="cn" name="cn" class="w-100" [(ngModel)]="CustomerName"
+                                    [suggestions]="filteredCustomerNameArr" (completeMethod)="filterCustomer($event)"
+                                    field="name" [minLength]="1"></p-autoComplete>
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
-                        <input id="bn" name="bn" type="text"class="form-control" [(ngModel)]="RetailerName">
+                                <input id="bn" name="bn" type="text" class="form-control" [(ngModel)]="RetailerName">
                             </div>
                             <div class="col-xl-4">
                                 <label>Gst Number</label>
                                 <input id="gst" name="gst" class="form-control" [(ngModel)]="GSTNumber">
                             </div>
                         </div>
-                       
+
                         <div class="row mt-3">
                             <div class="col-xl-4">
                                 <label>Phone Number</label>
@@ -274,28 +285,29 @@
                             </div>
                             <div class="col-xl-4">
                                 <label>Email Id</label>
-                        <input id="email" name="email" class="form-control" [(ngModel)]="Email">
+                                <input id="email" name="email" class="form-control" [(ngModel)]="Email">
                             </div>
                             <div class="col-xl-4">
                                 <label>Address</label>
-                                
-                        <textarea id="address" name="address" rows="3" class="form-control" [(ngModel)]="Address"></textarea>
+
+                                <textarea id="address" name="address" rows="3" class="form-control"
+                                    [(ngModel)]="Address"></textarea>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="col-xl-3">
                         <div class="row">
                             <div class="col-xl-12">
                                 <label>Invoice Number</label>
-                                <input id="in" name="in" class="form-control"  [(ngModel)]= "InvoiceNumber">
+                                <input id="in" name="in" class="form-control" [(ngModel)]="InvoiceNumber">
                             </div>
                             <div class="col-xl-12 mt-4">
                                 <label>Invoice Date</label>
-                                <input id="dt" name="dt" type="date" class="form-control"  [(ngModel)]= "DateOfPurchase">
+                                <input id="dt" name="dt" type="date" class="form-control" [(ngModel)]="DateOfPurchase">
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -303,61 +315,43 @@
 
                 <table class="table">
                     <thead>
-                      <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Cost Price</th>
-                        <th scope="col">SellingPrice</th>
-                        <th scope="col">GST(%)</th>
-                        <th scope="col">Warranty</th>
-                        <th scope="col"></th>
-                      </tr>
+                        <tr>
+                            <th scope="col"  class="text-center">S.No</th>
+                            <th scope="col"  class="text-center">Product Name</th>
+                            <th scope="col"  class="text-center">Quantity</th>
+                            <th scope="col"  class="text-center">Cost Price</th>
+                            <th scope="col"  class="text-center">SellingPrice</th>
+
+                            <th scope="col"  class="text-center">Discount(%)</th>
+                            <th scope="col"  class="text-center">GST(%)</th>
+                            <th scope="col"  class="text-center">Warranty(in months)</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
-                          <td>{{i+1}}</td>
-                        <td  scope="col">
-                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-  field="name" [minLength]="1"></p-autoComplete>
-                        </td>
-                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
-                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.CostPrice"></td>
-                        <td  ><input type="number" name="SellingPrice{{i}}" id ="SellingPrice{{i}}" class="form-control"  [(ngModel)]="data.SellingPrice"></td>
-                        <td  ><input type="number" name="Tax{{i}}" id ="Tax{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
-                        <td  scope="col"><input type="number" name="Warranty{{i}}" id ="Warranty{{i}}" class="form-control"  [(ngModel)]="data.Warranty"></td>
-                        <td  scope="col">
-                            <div class="d-flex" style="justify-content : space-between">
-                                <div class="p-2" *ngIf="inventoryFormArr.length > 1 "  (click)="inventoryFormArr.splice(i,1)">
+                        <tr *ngFor="let data of editPageArr; let i = index; let first = first ; let last = last">
+                            <td  class="text-center">{{i+1}}</td>
+                            <td scope="col" class="text-center">{{data.ProductName}}
+                                
+                            </td>
+                            <td scope="col"  class="text-center"> {{data.Quantity}}</td>
+                            <td scope="col"  class="text-center">{{data.CostPrice}}</td>
+                            <td scope="col"  class="text-center">{{data.SellingPrice}}</td>
+                            <td scope="col"  class="text-center">{{data.Discount}}</td>
+                            <td scope="col"  class="text-center">{{data.Tax}}</td>
+                            <td scope="col"  class="text-center">{{data.Warranty}}</td>
+                        </tr>
 
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                </div>
-                                <div class="p-2" *ngIf="last" (click)="inventoryFormArr.push({})">
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-
-                                </div>
-    
-                            </div>
-
-                        </td>
-                      </tr>
-                     
                     </tbody>
-                  </table>
-               </div>
-                
-           
-        </div>
-        <div class="card-footer text-right">
-            <div class="btn btn-group ">
-                <button class="btn btn-secondary mr-2">
-                    Cancel
-                </button>
-                <button class="btn btn-success">
-                    Submit
-                </button>
+                    <tfoot *ngIf="editPageArr.length">
+                        <tr>
+                            <td colspan="8" >Total Purchased Amount : {{totalCostPrice}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-    </div>
+
+
+        </div>
     </div>
 
 

@@ -99,70 +99,23 @@ export class InventoryComponent {
 
 
   
-
+    customerNameArr : any = [];
+    filteredCustomerNameArr : any = [];
+    retailerNameArr : any = [];
     getInventoryDetails() {
     this._globalService.getRetailers().subscribe((res) => {
       this.inventoryDetails = res;
-    });
-
-
-  this.inventoryData = [{
-    ProductName : "Camera",
-    Quantity : 5,
-    CurrentQuantity : 4,
-    CostPrice : 500,
-    SellingPrice : 1000,
-    Discount : 5,
-    DateOfPurchase : "10-09-2022",
-    Warranty : 2,
-    Tax : 5
-  },
-  {
-    ProductName : "Camera",
-    Quantity : 5,
-    CurrentQuantity : 4,
-    CostPrice : 500,
-    SellingPrice : 1000,
-    Discount : 5,
-    DateOfPurchase : "10-09-2022",
-    Warranty : 2,
-    Tax : 5
-  },
-  {
-    ProductName : "Camera1",
-    Quantity : 5,
-    CurrentQuantity : 4,
-    CostPrice : 500,
-    SellingPrice : 1000,
-    Discount : 5,
-    DateOfPurchase : "10-09-2022",
-    Warranty : 2,
-    Tax : 5
-  },
-  {
-    ProductName : "Camera2",
-    Quantity : 5,
-    CurrentQuantity : 4,
-    CostPrice : 500,
-    SellingPrice : 1000,
-    Discount : 5,
-    DateOfPurchase : "10-09-2022",
-    Warranty : 2,
-    Tax : 5
-  },
-  {
-    ProductName : "Camera3",
-    Quantity : 5,
-    CurrentQuantity : 4,
-    CostPrice : 500,
-    SellingPrice : 1000,
-    Discount : 5,
-    DateOfPurchase : "10-09-2022",
-    Warranty : 2,
-    Tax : 5
-  }
-]
-  }
+      let customerObj  : any = {};
+      let retailerObj : any  = {};
+      this.inventoryDetails.forEach((ele : any) => {
+        customerObj[ele.CustomerName] = {name : ele.CustomerName};
+        retailerObj[ele.RetailerName] = {name : ele.RetailerName};
+      });
+      this.customerNameArr = Object.values(customerObj);
+      this.retailerNameArr = Object.values(retailerObj);
+      console.log( this.customerNameArr ,this.retailerNameArr,"this.retailerNameArrthis.retailerNameArr");
+      
+    });}
 
   resetForm(){
     this.InvoiceNumber = ""
@@ -187,6 +140,7 @@ export class InventoryComponent {
   }
 
 
+
   addInventoryForm() {
     this.inventoryFormArr.push({
       ProductName : "",
@@ -200,18 +154,22 @@ export class InventoryComponent {
     })
   }
 
-  filterCountry(event : any) {
+  filterCountry(h:any){}
+
+  filterCustomer(event : any) {
+    console.log(event);
+    
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
-    for (let i = 0; i < this.countries.length; i++) {
-      let country = this.countries[i];
+    for (let i = 0; i < this.customerNameArr.length; i++) {
+      let country = this.customerNameArr[i];
       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(country);
       }
     }
 
-    this.filteredCountries = filtered;
+    this.filteredCustomerNameArr = filtered;
   }
 
   pageType :  any = 'main'
@@ -238,7 +196,7 @@ export class InventoryComponent {
       Email : this.Email,
        Address : this.Address,
       RetailerName : this.RetailerName,
-      CustomerName : this.CustomerName,
+      CustomerName :('name' in this.CustomerName) ? this.CustomerName['name'] : this.CustomerName ,
       GSTNumber : this.GSTNumber,
       DateOfPurchase : this.DateOfPurchase,
       InvoiceNumber : this.InvoiceNumber
@@ -254,6 +212,28 @@ export class InventoryComponent {
       
     });
     console.log(this.inventoryFormArr);
+    
+  }
+
+
+  RetailerId : any
+  editPageArr : any = [];
+  totalCostPrice : any
+  editPageData(data : any){
+    this.RetailerId = data.Id;
+    this.InvoiceNumber =data.InvoiceNumber;
+    this.DateOfPurchase = new Date(data.DateOfPurchase);
+    this.Address =data.Address;
+    this.Email =data.Email;
+    this.MobileNumber =data.MobileNumber;
+    this.GSTNumber =data.GSTNumber;
+    this.CustomerName ={name : data.CustomerName};
+    this.RetailerName =data.RetailerName;
+
+    this.editPageArr = data.Inventories
+
+    this.totalCostPrice = this.editPageArr.reduce((sum:any, p: any)=> sum + (p.CostPrice), 0)
+
     
   }
 }
