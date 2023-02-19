@@ -22,6 +22,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import {
   HttpClientModule
 } from '@angular/common/http';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   providers: [
@@ -32,7 +33,8 @@ import {
     LoginComponent,
     InventoryComponent,
     DashboardComponent,
-    SalesComponent
+    SalesComponent,
+    ProfileComponent
 
   ],
   imports: [

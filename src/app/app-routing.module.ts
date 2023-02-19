@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SalesComponent } from './components/sales/sales.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'inventory', component: InventoryComponent },
   { path: 'sales', component: SalesComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '',   redirectTo: '/login', pathMatch: 'full' }, // redirect to `login`
   // { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
