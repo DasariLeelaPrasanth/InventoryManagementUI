@@ -23,6 +23,10 @@ import {
   HttpClientModule
 } from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
+
 
 @NgModule({
   providers: [
@@ -48,7 +52,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     ChartModule,
     SelectDropDownModule,
     AutoCompleteModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2SearchPipeModule,
+    TypeaheadModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

@@ -15,10 +15,20 @@ export class AppSettings{
 
 
         "getRetailers" :  environment.api + "/getRetailers",
-        "getRetailersById" :  environment.api + "/getRetailersById",
+        "getInventory" :  environment.api + "/getInventory",
         "createRetailers" :  environment.api + "/createRetailers",
 
     
-        "dataDump" : environment.api + "/dataDump"
+        "dataDump" : environment.api + "/dataDump",
+
+        "addFile" : environment.api + "/addFile",
+        "getFile" :  environment.api +"/getFile",
+
+        
+        
+        
+        "getUsers" :  environment.api + "/getUsers",
+        "getUserById" :  environment.api + "/getUserById",
+        "addUser" :  environment.api + "/addUser"
     }
 }

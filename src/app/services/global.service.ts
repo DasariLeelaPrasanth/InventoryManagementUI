@@ -40,9 +40,9 @@ export class GlobalService {
        
    }
 
-   getRetailersById(){
+   getInventory(){
     let val = this._http
-       .get(AppSettings.api.getRetailersById);
+       .get(AppSettings.api.getInventory);
        return val
        
    }
@@ -58,6 +58,39 @@ export class GlobalService {
    dataDump(){
       let val = this._http
          .get(AppSettings.api.dataDump);
+         return val
+         
+     }
+
+     addFile(body: any){
+      let val = this._http
+      .post(AppSettings.api.addFile,body);
+      return val
+     }
+
+     getFile(id: any){
+      let val = this._http
+      .get(AppSettings.api.getFile +"/"+id);
+      return val
+     }
+
+     getUsers(){
+      let val = this._http
+         .get(AppSettings.api.getUsers);
+         return val
+         
+     }
+  
+     getUserById(id:any){
+      let val = this._http
+         .get(AppSettings.api.getUserById +"/"+id);
+         return val
+         
+     }
+  
+     addUser(body : any){
+      let val = this._http
+         .post(AppSettings.api.addUser,body);
          return val
          
      }

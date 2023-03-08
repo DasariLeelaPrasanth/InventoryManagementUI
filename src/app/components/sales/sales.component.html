@@ -73,8 +73,9 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label style="width: 100%;">Customer Name</label>
-                                <p-autoComplete id="cn" name="cn"  [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-                                field="name" [minLength]="1"></p-autoComplete>
+                                <input id="CustomerName" class="form-control" name="CustomerName"
+                                [(ngModel)]="CustomerName" [typeahead]="customerNameArr" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                                > 
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
@@ -137,8 +138,8 @@
                       <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
                           <td>{{i+1}}</td>
                         <td  scope="col">
-                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-  field="name" [minLength]="1"></p-autoComplete>
+                            <input id="productName{{i}}" class="form-control" name="productName{{i}}"
+                            [(ngModel)]="data.ProductName" [typeahead]="productsArr" (typeaheadOnSelect)="productsOnSelect($event,i)">
                         </td>
                         <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
                         <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.Price"></td>
@@ -182,7 +183,7 @@
 
     <div class="card" *ngIf="pageType == 'edit'">
         <div class="card-header">
-               Edit Sales
+               View Sales
         </div>
         <div class="card-body">
             <div class="customerDetails  border-bottom">
@@ -191,8 +192,8 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label>Customer Name</label>
-                                <p-autoComplete id="cn" name="cn"  class="w-100" [(ngModel)]="CustomerName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-                                field="name" [minLength]="1"></p-autoComplete>
+                                <input id="CustomerName" name="CustomerName" type="text"class="form-control" [(ngModel)]="CustomerName">
+                           
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
@@ -255,8 +256,8 @@
                       <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
                           <td>{{i+1}}</td>
                         <td  scope="col">
-                            <p-autoComplete  name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-  field="name" [minLength]="1"></p-autoComplete>
+                            <input name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName"  type="text"class="form-control">
+                           
                         </td>
                         <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
                         <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.Price"></td>
@@ -291,7 +292,7 @@
                     Cancel
                 </button>
                 <button class="btn btn-success" (click)="saveAddForm()">
-                    Save & Download PDF
+                   Download PDF
                 </button>
             </div>
     </div>

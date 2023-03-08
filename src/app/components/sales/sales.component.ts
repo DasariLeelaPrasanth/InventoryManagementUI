@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { GlobalService } from 'src/app/services/global.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -52,81 +53,40 @@ export class SalesComponent {
         TotalPrice : ""
   }]
 
-
-  constructor(public formBuilder: FormBuilder) {
+  userData : any
+  userId: any;
+  
+  constructor(public formBuilder: FormBuilder,public _globalService: GlobalService) {
     
    }
 
    purchasesData : any = []
   ngOnInit(): void {
-    this.purchasesData = [{
-      InvoiceNumber : "SN0001",
-      CustomerName : "Prasanth",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "20000"
-    },
-    {
-      InvoiceNumber : "SN0002",
-      CustomerName : "Dasari",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "50000"
-    },
-    {
-      InvoiceNumber : "SN0003",
-      CustomerName : "Leela",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "25000"
-    },
-    {
-      InvoiceNumber : "SN0004",
-      CustomerName : "DLP",
-      BusinessName : "DTSolutions",
-      MobileNumber : "9177987144",
-      DateOfPurchase : "10-09-2022",
-      Amount : "29000"
-    }
-  ]
+    this.userId = sessionStorage.getItem('userId');
+    this.getInventory()
+ this.getUser()
   }
-  
+  getInventory(){
+    this._globalService.getInventory().subscribe((res) => {
+      console.log(res,"getInventorygetInventorygetInventory");
+      this.productsData = res ;
+      this.productsData.forEach((ele : any) => {
+        
+        this.productsArr.push(ele.ProductName)
+      });
+      console.log(this.productsArr,"this.productsArr");
+      
+    })
+  }
 
-
-
-  filterCountry(event : any) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
-    let query = event.query;
-    for (let i = 0; i < this.countries.length; i++) {
-      let country = this.countries[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
-      }
-    }
-
-    this.filteredCountries = filtered;
+  getUser(){
+    this._globalService.getUserById(this.userId ).subscribe((res) => {
+      console.log(res);
+      this.userData = res
+    })
   }
 
   pageType :  any = 'main'
-
-  options = [
-    {value: 'Option 1', label: 'Option 1'},
-    {value: 'Option 2', label: 'Option 2'},
-    {value: 'Option 3', label: 'Option 3'}
-  ];
-
-  selectedOption = "";
-
-  config = {
-    placeholder: 'Select an option',
-    search: true,
-    searchPlaceholder: 'Search...',
-    multiple: false
-  };
 
 
 
@@ -179,16 +139,15 @@ export class SalesComponent {
   }
 
   async saveAddForm(){
-    
-
+ 
     let companyData = {
-      MobileNumber : "Phone no : 9177987144",
-      Email : "Email : prasanthprince1998@gmail.com",
-      Address :"Addresss : Lakshmipuram, Vepagunta, Visakhapatnam, Andhrapradesh-530047",
+      MobileNumber : "Phone no : "+this.userData.MobileNumber,
+      Email : "Email : "+this.userData.Email,
+      Address :"Addresss : "+this.userData.Address,
       InvoiceNumber : this.InvoiceNumber,
-      CustomerName :  "Dasari Tech Solutions",
-      BusinessName : "Dasari Tech Solutions",
-      GSTNumber :  "GSTIN : ",
+      CustomerName : this.userData['UserName'],
+      BusinessName : this.userData['CompanyName'],
+      GSTNumber :  "GSTIN : "+this.userData.GSTNumber,
       DateOfPurchase : this.DateOfPurchase
     }
 
@@ -283,7 +242,7 @@ export class SalesComponent {
           widths: ['auto', '*', 'auto', 'auto','auto', 'auto', 'auto'],
           body: [
             ['S.No','Product Name', 'Quantity', 'Price/Unit', 'Discount(%)', 'GST(%)' , 'Amount'],
-            ...salesData.map((p: any, index : any) => ([index +1 , "name" in  p.ProductName ? p.ProductName.name : p.ProductName, p.Quantity, p.Price, p.Discount, p.Tax, p.TotalPrice])),
+            ...salesData.map((p: any, index : any) => ([index +1 , p.ProductName, p.Quantity, p.Price, p.Discount, p.Tax, p.TotalPrice])),
             // [{text: 'Total Amount', colSpan: 7},  salesData.reduce((sum:any, p: any)=> sum + (p.TotalPrice), 0)]
             [{},{text: 'Total Amount'},{},{}, {},{},  salesData.reduce((sum:any, p: any)=> sum + (p.TotalPrice), 0)]
           ]
@@ -333,4 +292,53 @@ export class SalesComponent {
     pdfMake.createPdf(docDefinition).open();  
     this.pageType = 'main'
   }
+
+  inventoryDetails : any
+  RetailerName : any
+  productsData : any
+  typeaheadOnSelect(event : any) : void{
+    if(event.value){
+      let filteredNames = this.inventoryDetails.filter((ele :any) => ele.CustomerName == event.value);
+console.log(filteredNames,"filteredNamesfilteredNames");
+
+      this.Address =filteredNames[0].Address;
+    this.Email =filteredNames[0].Email;
+    this.MobileNumber =filteredNames[0].MobileNumber;
+    this.GSTNumber =filteredNames[0].GSTNumber;
+    this.RetailerName =filteredNames[0].RetailerName
+    
+    }
+  }
+
+  productsArr : any = []
+  productsOnSelect(event: any , index : any){
+    let ele = this.productsData.filter((ele :any) => ele.ProductName == event.value);
+    console.log(ele);
+    
+    this.salesFormArr[index]["CostPrice"] = ele[0].CostPrice
+    this.salesFormArr[index]["SellingPrice"] = ele[0].SellingPrice
+    this.salesFormArr[index]["Discount"] = ele[0].Discount
+    this.salesFormArr[index]["Tax"] = ele[0].Tax
+    this.salesFormArr[index]["Warranty"] = ele[0].Warranty
+  }
+
+  customerNameArr : any = [];
+  filteredCustomerNameArr : any = [];
+  retailerNameArr : any = [];
+  getInventoryDetails() {
+  this._globalService.getRetailers().subscribe((res : any) => {
+    this.inventoryDetails = res;
+    let customerObj  : any = {};
+    let retailerObj : any  = {};
+    this.inventoryDetails.forEach((ele : any) => {
+      customerObj[ele.CustomerName] =  ele.CustomerName;
+      retailerObj[ele.RetailerName] =  ele.RetailerName;
+    });
+    this.customerNameArr = Object.values(customerObj);
+    this.retailerNameArr = Object.values(retailerObj);
+    console.log(this.inventoryDetails);
+    
+    console.log( this.customerNameArr ,this.retailerNameArr,"this.retailerNameArrthis.retailerNameArr");
+    
+  });}
 }

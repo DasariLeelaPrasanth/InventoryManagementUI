@@ -1,128 +1,110 @@
 <app-header></app-header>
 
-  <div class="container-fluid">
-      <div class="card">
-        <div class="card-header">
-            Dashboard
-        </div>
-        <div class="card-body">
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      Dashboard
+    </div>
+    <div class="card-body">
 
-            <div class="row">
-                <div class="col-xl-6">
-                     <div class="row">
-                         <!-- <div class="col-xl-3">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="row">
+            <!-- <div class="col-xl-3">
          
                          </div> -->
-                         <div class="col-xl-12">
-                             <div class="card">
-         
-                                 <div [chart]="chart"></div>
-                             </div>
-                         </div>
-                     </div>
-                </div>
-                <div class="col-xl-4">
-                 <div class="card">
-                     <div [chart]="monthlyChart"></div>
-                     
-                 </div>
-                </div>
-                <div class="col-xl-2">
-                    <div class="card">
-                        <div class="card-header">
-                                Amount
-                           
-                        </div>
-                        <div class="card-header">
-                                    To give
-                                    <div class="float-right">500</div>
-                               
-                        </div>
-                        <div class="card-header">
-                            To receive
-                            <div class="float-right">500</div>
-                </div>
-                        
-                    </div>
-                </div>
+            <div class="col-xl-12">
+              <div class="card">
+
+                <div [chart]="chart"></div>
+              </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div [chart]="pieChart"></div>
-                    </div>
-         
-                </div>
-                <div class="col-xl-4">
-                 <div class="card">
-                   <div class="card-header">
-                     Notifications
-                   </div>
-                 <table class="table">
-                     <thead>
-                       <tr>
-                         <th scope="col">#</th>
-                         <th scope="col">Customer Name</th>
-                         <th scope="col">Notification</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Warranty is about to end</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">2</th>
-                         <td>Jacob</td>
-                         <td>Need to check the camera today</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">3</th>
-                         <td>Larry</td>
-                         <td>Cameras not working properly</td>
-                       </tr>
-                     </tbody>
-                   </table>
-                </div>
-                </div>
-         
-                <div class="col-xl-4">
-                 <div class="card">
-                   <div class="card-header">
-                     Inventory(stock available more than an year)
-                   </div>
-                 <table class="table">
-                     <thead>
-                       <tr>
-                         <th scope="col">#</th>
-                         <th scope="col">Product Name</th>
-                         <th scope="col">Date</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Cam1</td>
-                         <td>10-09-2021</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">2</th>
-                         <td>cam2</td>
-                         <td>10-09-2021</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">3</th>
-                         <td>cam3</td>
-                         <td>10-09-2021</td>
-                       </tr>
-                     </tbody>
-                   </table>
-                   </div>
-         
-                </div>
-            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="card">
+            <div [chart]="monthlyChart"></div>
+
+          </div>
         </div>
       </div>
+      <div class="row mt-4">
+        <div class="col-xl-4">
+          <div class="card">
+            <div [chart]="pieChart"></div>
+          </div>
+
+        </div>
+        <div class="col-xl-4">
+          <div class="card">
+            <div class="card-header">
+              Notifications
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Notification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Warranty is about to end</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Need to check the camera today</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>Cameras not working properly</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-xl-4">
+          <div class="card">
+            <div class="card-header">
+              Inventory(stock available more than an year)
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Cam1</td>
+                  <td>10-09-2021</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>cam2</td>
+                  <td>10-09-2021</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>cam3</td>
+                  <td>10-09-2021</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 <app-footer></app-footer>

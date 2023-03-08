@@ -9,16 +9,8 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class InventoryComponent {
 
-  // ProductName : DataTypes.STRING,
-  // DateOfPurchase : DataTypes.DATE,
-  // Quantity : DataTypes.INTEGER,
-  // CostPrice : DataTypes.INTEGER,
-  // SellingPrice : DataTypes.INTEGER,
-  // Warranty : DataTypes.INTEGER,
-  // Tax : DataTypes.INTEGER,
-  // CurrentQuantity : DataTypes.INTEGER,
 
-          
+  searchText : any;     
           
 
 
@@ -34,21 +26,6 @@ export class InventoryComponent {
   CustomerName:any
   RetailerName:any
 
-  countries: any = [ 
-    {"name": "Prasanth", "code": "AF"}, 
-    {"name": "Leela", "code": "AX"}, 
-    {"name": "Dasari", "code": "AL"}, 
-     ];
-
-  filteredCountries: any=[];
-
-  selectedCountries: any=[];
-
-  selectedCountryAdvanced: any=[];
-
-  filteredBrands: any=[];
-
-  filteredGroups: any=[];
 
 
   userForm!: FormGroup;
@@ -92,12 +69,25 @@ export class InventoryComponent {
   }
 
   ngOnInit(): void {
-    this.getInventoryDetails()
+    this.getInventoryDetails();
+    this.getInventory();
+
   }
 
 
+  getInventory(){
+    this._globalService.getInventory().subscribe((res) => {
+      console.log(res,"getInventorygetInventorygetInventory");
+      this.productsData = res ;
+      this.productsData.forEach((ele : any) => {
+        
+        this.productsArr.push(ele.ProductName)
+      });
+    })
+  }
 
-
+  productsData : any = []
+    productsArr : any = []
   
     customerNameArr : any = [];
     filteredCustomerNameArr : any = [];
@@ -108,14 +98,25 @@ export class InventoryComponent {
       let customerObj  : any = {};
       let retailerObj : any  = {};
       this.inventoryDetails.forEach((ele : any) => {
-        customerObj[ele.CustomerName] = {name : ele.CustomerName};
-        retailerObj[ele.RetailerName] = {name : ele.RetailerName};
+        customerObj[ele.CustomerName] =  ele.CustomerName;
+        retailerObj[ele.RetailerName] =  ele.RetailerName;
       });
       this.customerNameArr = Object.values(customerObj);
       this.retailerNameArr = Object.values(retailerObj);
+      console.log(this.inventoryDetails);
+      
       console.log( this.customerNameArr ,this.retailerNameArr,"this.retailerNameArrthis.retailerNameArr");
       
     });}
+
+    searchTerm: any
+    filteredCustomer : any = []
+    selectName(name: string) {
+      this.CustomerName = name;
+      this.filteredCustomer = [];
+    }
+
+
 
   resetForm(){
     this.InvoiceNumber = ""
@@ -154,40 +155,12 @@ export class InventoryComponent {
     })
   }
 
-  filterCountry(h:any){}
 
-  filterCustomer(event : any) {
-    console.log(event);
-    
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
-    let query = event.query;
-    for (let i = 0; i < this.customerNameArr.length; i++) {
-      let country = this.customerNameArr[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
-      }
-    }
-
-    this.filteredCustomerNameArr = filtered;
-  }
 
   pageType :  any = 'main'
 
-  options = [
-    {value: 'Option 1', label: 'Option 1'},
-    {value: 'Option 2', label: 'Option 2'},
-    {value: 'Option 3', label: 'Option 3'}
-  ];
 
-  selectedOption = "";
 
-  config = {
-    placeholder: 'Select an option',
-    search: true,
-    searchPlaceholder: 'Search...',
-    multiple: false
-  };
 
   submitInventory(){
 
@@ -196,7 +169,7 @@ export class InventoryComponent {
       Email : this.Email,
        Address : this.Address,
       RetailerName : this.RetailerName,
-      CustomerName :('name' in this.CustomerName) ? this.CustomerName['name'] : this.CustomerName ,
+      CustomerName  : this.CustomerName ,
       GSTNumber : this.GSTNumber,
       DateOfPurchase : this.DateOfPurchase,
       InvoiceNumber : this.InvoiceNumber
@@ -211,6 +184,7 @@ export class InventoryComponent {
       console.log(res);
       
     });
+    this.pageType = 'main'
     console.log(this.inventoryFormArr);
     
   }
@@ -227,7 +201,7 @@ export class InventoryComponent {
     this.Email =data.Email;
     this.MobileNumber =data.MobileNumber;
     this.GSTNumber =data.GSTNumber;
-    this.CustomerName ={name : data.CustomerName};
+    this.CustomerName = data.CustomerName;
     this.RetailerName =data.RetailerName;
 
     this.editPageArr = data.Inventories
@@ -236,4 +210,32 @@ export class InventoryComponent {
 
     
   }
+
+
+  typeaheadOnSelect(event : any) : void{
+    if(event.value){
+      let filteredNames = this.inventoryDetails.filter((ele :any) => ele.CustomerName == event.value);
+console.log(filteredNames,"filteredNamesfilteredNames");
+
+      this.Address =filteredNames[0].Address;
+    this.Email =filteredNames[0].Email;
+    this.MobileNumber =filteredNames[0].MobileNumber;
+    this.GSTNumber =filteredNames[0].GSTNumber;
+    this.RetailerName =filteredNames[0].RetailerName
+    
+    }
+  }
+
+  productsOnSelect(event: any , index : any){
+    let ele = this.productsData.filter((ele :any) => ele.ProductName == event.value);
+    console.log(ele);
+    
+    this.inventoryFormArr[index]["CostPrice"] = ele[0].CostPrice
+    this.inventoryFormArr[index]["SellingPrice"] = ele[0].SellingPrice
+    this.inventoryFormArr[index]["Discount"] = ele[0].Discount
+    this.inventoryFormArr[index]["Tax"] = ele[0].Tax
+    this.inventoryFormArr[index]["Warranty"] = ele[0].Warranty
+  }
+
+  
 }

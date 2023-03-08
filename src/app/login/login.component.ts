@@ -29,6 +29,9 @@ export class LoginComponent {
       this._authenticationService.login(this.loginObj).subscribe((res: any) => {
         console.log(res,"login");
         if(res['message'] == "Success"){
+          let data  = res['data']
+          let userId = data['Id']
+          sessionStorage.setItem('userId', userId)
            this.validForm = false;
            this.router.navigate(['/dashboard']);
         }

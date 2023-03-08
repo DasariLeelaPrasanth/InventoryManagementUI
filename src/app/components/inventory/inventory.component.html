@@ -12,12 +12,25 @@
             </nav>
 
             <div class="float-right">
-                <button class="btn btn-primary" (click)="pageType = 'create';resetForm()">
-                    Add Purchase
-                </button>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="search-hero">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Search">
+                          </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <button class="btn btn-primary" (click)="pageType = 'create';resetForm()">
+                            Add Purchase
+                        </button>
+                    </div>
+                </div>
+               
+              
             </div>
         </div>
         <div class="card-body">
+            <div class="row">
+              
             <table class="table" *ngIf="tableType == 'Purchases'">
                 <thead>
                     <tr>
@@ -33,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of inventoryDetails; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of inventoryDetails | filter:searchText; let i = index; let first = first ; let last = last  ">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>
@@ -112,6 +125,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
 
     </div>
@@ -134,9 +148,9 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label style="width: 100%;">Customer Name</label>
-                                <p-autoComplete id="cn" name="cn" class="w-100" [(ngModel)]="CustomerName"
-                                [suggestions]="filteredCustomerNameArr" (completeMethod)="filterCustomer($event)"
-                                field="name" [minLength]="1"></p-autoComplete>
+                                <input id="CustomerName" class="form-control" name="CustomerName"
+                                [(ngModel)]="CustomerName" [typeahead]="customerNameArr" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                                > 
                             </div>
                             <div class="col-xl-4">
                                 <label>Retailer Name</label>
@@ -201,9 +215,11 @@
                         <tr *ngFor="let data of inventoryFormArr; let i = index; let first = first ; let last = last">
                             <td>{{i+1}}</td>
                             <td scope="col">
-                                <p-autoComplete name="pn{{i}}" id="pn{{i}}" [(ngModel)]="data.ProductName"
+                                <input id="productName{{i}}" class="form-control" name="productName{{i}}"
+                                [(ngModel)]="data.ProductName" [typeahead]="productsArr" (typeaheadOnSelect)="productsOnSelect($event,i)">
+                                <!-- <p-autoComplete name="pn{{i}}" id="pn{{i}}" [(ngModel)]="data.ProductName"
                                     [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
-                                    field="name" [minLength]="1"></p-autoComplete>
+                                    field="name" [minLength]="1"></p-autoComplete> -->
                             </td>
                             <td scope="col"><input type="number" name="qua{{i}}" id="qua{{i}}" class="form-control"
                                     [(ngModel)]="data.Quantity"></td>
@@ -242,7 +258,7 @@
         </div>
         <div class="card-footer text-right">
             <div class="btn btn-group ">
-                <button class="btn btn-secondary mr-2">
+                <button class="btn btn-secondary mr-2" (click)="this.pageType = 'main'">
                     Cancel
                 </button>
                 <button class="btn btn-success" (click)="submitInventory()">
@@ -264,9 +280,7 @@
                         <div class="row">
                             <div class="col-xl-4 d-block">
                                 <label>Customer Name</label>
-                                <p-autoComplete id="cn" name="cn" class="w-100" [(ngModel)]="CustomerName"
-                                    [suggestions]="filteredCustomerNameArr" (completeMethod)="filterCustomer($event)"
-                                    field="name" [minLength]="1"></p-autoComplete>
+                                <input id="cn" name="cn" type="text" class="form-control" [(ngModel)]="CustomerName">
                             </div>
                             <div class="col-xl-4">
                                 <label>Business Name</label>
@@ -351,6 +365,13 @@
             </div>
 
 
+        </div>
+        <div class="card-footer text-right">
+            <div class="btn btn-group ">
+                <button class="btn btn-secondary mr-2" (click)="this.pageType = 'main'">
+                    Back
+                </button>
+            </div>
         </div>
     </div>
 
