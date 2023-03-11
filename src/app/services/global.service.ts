@@ -15,23 +15,26 @@ export class GlobalService {
     let val = this._http
        .get(AppSettings.api.getCustomerSales);
        return val
-       
    }
 
-   getCustomerSalesById(){
-    let val = this._http
-       .get(AppSettings.api.getCustomerSalesById);
-       return val
+   // getCustomerSalesById(){
+   //  let val = this._http
+   //     .get(AppSettings.api.getCustomerSalesById);
+   //     return val
        
-   }
+   // }
    createCustomerSales(body : any){
     let val = this._http
-       .post(AppSettings.api.createCustomerSales,body);
+       .post(AppSettings.api.createCustomerSales,body, {responseType: 'text'});
        return val
        
    }
 
-
+   getSoldProducts(){
+      let val = this._http
+      .get(AppSettings.api.getSoldProducts);
+      return val
+   }
 
    getRetailers(){
     let val = this._http
@@ -49,7 +52,7 @@ export class GlobalService {
 
    createRetailers(body : any){
     let val = this._http
-       .post(AppSettings.api.createRetailers,body);
+       .post(AppSettings.api.createRetailers,body,{responseType: 'text'});
        return val
        
    }
@@ -70,7 +73,7 @@ export class GlobalService {
 
      getFile(id: any){
       let val = this._http
-      .get(AppSettings.api.getFile +"/"+id);
+      .get(AppSettings.api.getFile +"/"+id, {responseType: 'blob'});
       return val
      }
 

@@ -25,6 +25,7 @@ import {
 import { ProfileComponent } from './components/profile/profile.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import {CalendarModule} from 'primeng/calendar';
 
 
 
@@ -54,7 +55,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     AutoCompleteModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    CalendarModule
   ],
   bootstrap: [AppComponent]
 })

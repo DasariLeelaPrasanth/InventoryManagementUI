@@ -9,17 +9,16 @@ export class AppSettings{
 
         "login" :  environment.api + "/login",
 
-        "getCustomerSales" :  environment.api + "/getCustomerSales",
-        "getCustomerSalesById" :  environment.api + "/getCustomerSalesById",
-        "createCustomerSales" :  environment.api + "/createCustomerSales",
-
 
         "getRetailers" :  environment.api + "/getRetailers",
         "getInventory" :  environment.api + "/getInventory",
         "createRetailers" :  environment.api + "/createRetailers",
 
-    
-        "dataDump" : environment.api + "/dataDump",
+        "getCustomerSales" :  environment.api + "/getCustomerSales",
+        "createCustomerSales" :  environment.api + "/createCustomerSales",
+        "getSoldProducts": environment.api + "/getSoldProducts",
+
+        "dataDump" : environment.api + "/getDataDump",
 
         "addFile" : environment.api + "/addFile",
         "getFile" :  environment.api +"/getFile",

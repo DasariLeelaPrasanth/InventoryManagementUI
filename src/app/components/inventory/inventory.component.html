@@ -82,30 +82,32 @@
                     <tr>
                         <th scope="col">S.no</th>
                         <th scope="col">Product Name</th>
-                        <th scope="col">Quantity</th>
+                        <th scope="col">Quantity Purchased</th>
+                        <th scope="col">Quantity Sold</th>
                         <th scope="col">Current Quantity</th>
-                        <th scope="col">Cost Price</th>
+                        <!-- <th scope="col">Cost Price</th>
                         <th scope="col">Selling Price</th>
                         <th scope="col">Discount(%)</th>
                         <th scope="col">Date Of Purchase</th>
                         <th scope="col">Warranty (Months)</th>
-                        <th scope="col">GST(%)</th>
+                        <th scope="col">GST(%)</th> -->
                         <!-- <th scope="col">Action</th> -->
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let data of inventoryData; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of mergedData; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.ProductName}}</td>
-                        <td scope="col">{{data.Quantity}}</td>
-                        <td scope="col">{{data.CurrentQuantity}}</td>
-                        <td scope="col">{{data.CostPrice}}</td>
+                        <td scope="col">{{data.quantityPurchased ? data.quantityPurchased : '0'}}</td>
+                        <td scope="col">{{data.quantitySold ? data.quantitySold : '0'}}</td>
+                        <td scope="col">{{(data.quantityPurchased ? data.quantityPurchased : '0') - (data.quantitySold ? data.quantitySold : '0')}}</td>
+                        <!-- <td scope="col">{{data.CostPrice}}</td>
                         <td scope="col">{{data.SellingPrice}}</td>
                         <td scope="col">{{data.Discount}}</td>
                         <td scope="col">{{data.DateOfPurchase}}</td>
                         <td scope="col">{{data.Warranty}}</td>
-                        <td scope="col">{{data.Tax}}</td>
+                        <td scope="col">{{data.Tax}}</td> -->
                         <!-- <td  scope="col">
                             <div class="d-flex">
                                 <div class="p-2">
@@ -317,8 +319,9 @@
                                 <input id="in" name="in" class="form-control" [(ngModel)]="InvoiceNumber">
                             </div>
                             <div class="col-xl-12 mt-4">
-                                <label>Invoice Date</label>
-                                <input id="dt" name="dt" type="date" class="form-control" [(ngModel)]="DateOfPurchase">
+                                <label>Invoice Date : </label>
+                                {{DateOfPurchase | date}}
+                                <!-- <input id="dt" name="dt"  class="form-control" [(ngModel)]="DateOfPurchase | date"> -->
                             </div>
                         </div>
 

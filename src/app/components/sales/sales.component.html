@@ -4,9 +4,20 @@
         <div class="card-header">
                 Sales
                 <div class="float-right">
-                    <button class="btn btn-primary" (click)="pageType = 'create'; resetForm()">
-                        Add Sales
-                    </button>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="search-hero">
+                                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Search">
+                              </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <button class="btn btn-primary" (click)="pageType = 'create';resetForm()">
+                                Add Sales
+                            </button>
+                        </div>
+                    </div>
+                   
+                  
                 </div>
         </div>
         <div class="card-body">
@@ -19,19 +30,19 @@
                         <th scope="col">Business Name</th>
                         <th scope="col">Mobile Number</th>
                         <th scope="col">Date Of Purchase</th>
-                        <th scope="col">Amount</th>
+                        <!-- <th scope="col">Amount</th> -->
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody >
-                    <tr *ngFor="let data of purchasesData; let i = index; let first = first ; let last = last">
+                    <tr *ngFor="let data of CustomerSalesDetails  | filter:searchText; let i = index; let first = first ; let last = last">
                         <td scope="col">{{i+1}}</td>
                         <td scope="col">{{data.InvoiceNumber}}</td>
                         <td scope="col">{{data.CustomerName}}</td>
                         <td scope="col">{{data.BusinessName}}</td>
                         <td scope="col">{{data.MobileNumber}}</td>
-                        <td scope="col">{{data.DateOfPurchase}}</td>
-                        <td scope="col">{{data.Amount}}</td>
+                        <td scope="col">{{data.DateOfPurchase  | date}}</td>
+                        <!-- <td scope="col">{{data.Amount}}</td> -->
                         <td  scope="col">
                             <div class="d-flex">
                                 <div class="p-2">
@@ -39,8 +50,8 @@
                                     <i class="fa fa-trash" aria-hidden="true"></i>
 
                                 </div>
-                                <div class="p-2" (click)="pageType = 'edit'">
-                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <div class="p-2" (click)="pageType = 'edit';editPageData(data)">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
 
 
                                 </div>
@@ -141,11 +152,11 @@
                             <input id="productName{{i}}" class="form-control" name="productName{{i}}"
                             [(ngModel)]="data.ProductName" [typeahead]="productsArr" (typeaheadOnSelect)="productsOnSelect($event,i)">
                         </td>
-                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity"></td>
-                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.Price"></td>
-                        <td  ><input type="number" name="dis{{i}}" id ="dis{{i}}" class="form-control"  [(ngModel)]="data.Discount"></td>
-                        <td  ><input type="number" name="gst{{i}}" id ="gst{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
-                        <td  scope="col"><input type="number" name="tp{{i}}" id ="tp{{i}}" class="form-control"  [(ngModel)]="data.TotalPrice"></td>
+                        <td  scope="col"><input type="number" name="qua{{i}}" id ="qua{{i}}" class="form-control" [(ngModel)]="data.Quantity" (keyup)="keyFunc(data,i)"></td>
+                        <td  scope="col"><input type="number" name="pri{{i}}" id ="pri{{i}}" class="form-control"  [(ngModel)]="data.Price" (keyup)="keyFunc(data,i)"></td>
+                        <td  ><input type="number" name="dis{{i}}" id ="dis{{i}}" class="form-control"  [(ngModel)]="data.Discount" (keyup)="keyFunc(data,i)"></td>
+                        <td  ><input type="number" name="gst{{i}}" id ="gst{{i}}" class="form-control"  [(ngModel)]="data.Tax" (keyup)="keyFunc(data,i)"></td>
+                        <td  scope="col"><input type="number" name="tp{{i}}" id ="tp{{i}}" class="form-control"  [(ngModel)]="data.TotalPrice" ></td>
                         <td  scope="col">
                             <div class="d-flex" style="justify-content : space-between">
                                 <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
@@ -229,8 +240,10 @@
                                 <input id="in" name="in" class="form-control"  [(ngModel)]= "InvoiceNumber">
                             </div>
                             <div class="col-xl-12 mt-4">
-                                <label>Invoice Date</label>
-                                <input id="dt" name="dt" type="date" class="form-control"  [(ngModel)]= "DateOfPurchase">
+                                <label for="dt">Invoice Date : </label>
+                                <!-- <p-calendar id="dt" name="dt"   [(ngModel)]="DateOfPurchase"></p-calendar> -->
+                                <!-- <input id="dt" name="dt" class="form-control"  [(ngModel)]= "DateOfPurchase | date"> -->
+                                {{DateOfPurchase | date}}
                             </div>
                         </div>
                         
@@ -249,11 +262,10 @@
                         <th >Discount(%)</th>
                         <th >GST(%)</th>
                         <th scope="col">Amount</th>
-                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let data of salesFormArr; let i = index; let first = first ; let last = last">
+                      <tr *ngFor="let data of editPageArr; let i = index; let first = first ; let last = last">
                           <td>{{i+1}}</td>
                         <td  scope="col">
                             <input name="pn{{i}}" id ="pn{{i}}" [(ngModel)]="data.ProductName"  type="text"class="form-control">
@@ -264,23 +276,15 @@
                         <td  ><input type="number" name="dis{{i}}" id ="dis{{i}}" class="form-control"  [(ngModel)]="data.Discount"></td>
                         <td  ><input type="number" name="gst{{i}}" id ="gst{{i}}" class="form-control"  [(ngModel)]="data.Tax"></td>
                         <td  scope="col"><input type="number" name="tp{{i}}" id ="tp{{i}}" class="form-control"  [(ngModel)]="data.TotalPrice"></td>
-                        <td  scope="col">
-                            <div class="d-flex" style="justify-content : space-between">
-                                <div class="p-2" *ngIf="salesFormArr.length > 1 "  (click)="salesFormArr.splice(i,1)">
-
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                </div>
-                                <div class="p-2" *ngIf="last" (click)="salesFormArr.push({})">
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-
-                                </div>
-    
-                            </div>
-
-                        </td>
+                        
                       </tr>
                      
                     </tbody>
+                    <tfoot *ngIf="editPageArr.length">
+                        <tr>
+                            <td colspan="8" >Total Amount : {{totalCostPrice}}</td>
+                        </tr>
+                    </tfoot>
                   </table>
                </div>
                 
@@ -289,9 +293,9 @@
         <div class="card-footer text-right">
             <div class="btn btn-group ">
                 <button class="btn btn-secondary mr-2" (click)="pageType = 'main'">
-                    Cancel
+                    Back
                 </button>
-                <button class="btn btn-success" (click)="saveAddForm()">
+                <button class="btn btn-success" (click)="DownloadPdf('edit')">
                    Download PDF
                 </button>
             </div>
